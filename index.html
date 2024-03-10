@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Çizgi Roman Okuyucu</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            padding-bottom: 20px;
+        }
+        img {
+            width: auto; /* Resim orijinal genişliğinde gösterilecek */
+            max-width: 100%; /* Ancak maksimum genişlik ekran genişliğini aşmayacak */
+            height: auto; /* Resmin oranını koruyacak */
+        }
+        #sayfaNumarasi {
+            margin-top: 20px;
+        }
+        .zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
+        }
+        .button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .navigation, .discord-link {
+            margin-top: 15px;
+        }
+        .discord-link a {
+            color: #7289da;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .discord-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="sayfaNumarasi">Sayfa 1</div>
+<img id="comicImage" src="" alt="Çizgi roman sayfası" onclick="toggleZoom(event)">
+
+<div class="navigation">
+    <button class="button" onclick="oncekiSayfa()">Önceki</button>
+    <button class="button" onclick="sonrakiSayfa()">Sonraki</button>
+</div>
+
+<div class="discord-link">
+    <a href="https://discord.gg/yourInviteLink" target="_blank">Discord Sunucumuz İçin Tıkla</a>
+</div>
+
+<script>
+    var sayfalar = [
+        'sayfa1.jpg',
+        'sayfa2.jpg',
+        'sayfa3.jpg',
+        // Daha fazla sayfa ekleyebilirsiniz...
+    ];
+
+    var mevcutSayfa = 0;
+
+    function sayfaGoster() {
+        document.getElementById('comicImage').src = sayfalar[mevcutSayfa];
+        document.getElementById('sayfaNumarasi').innerText = 'Sayfa ' + (mevcutSayfa + 1);
+        document.getElementById('comicImage').classList.remove('zoomed');
+    }
+
+    function sonrakiSayfa() {
+        if (mevcutSayfa < sayfalar.length - 1) {
+            mevcutSayfa++;
+            sayfaGoster();
+        }
+    }
+
+    function oncekiSayfa() {
+        if (mevcutSayfa > 0) {
+            mevcutSayfa--;
+            sayfaGoster();
+        }
+    }
+
+    function toggleZoom(event) {
+        event.target.classList.toggle('zoomed');
+    }
+
+    // Yeni eklenen kısım
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight') {
+            sonrakiSayfa();
+        } else if (event.key === 'ArrowLeft') {
+            oncekiSayfa();
+        }
+    });
+
+    sayfaGoster();
+</script>
+
+</body>
+</html>
